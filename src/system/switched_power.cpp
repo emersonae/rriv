@@ -29,13 +29,13 @@ void setupSwitchedPower()
 
 void enableSwitchedPower()
 {
-  debug(F("Enabling switched power"));
+  // debug(F("Enabling switched power"));
   digitalWrite(SWITCHED_POWER_ENABLE, HIGH);
 }
 
 void disableSwitchedPower()
 {
-  debug(F("Disabling switched power"));
+  // debug(F("Disabling switched power"));
   digitalWrite(SWITCHED_POWER_ENABLE, LOW);
 }
 

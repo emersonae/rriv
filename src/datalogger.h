@@ -44,24 +44,27 @@
 #define DEPLOYMENT_IDENTIFIER_LENGTH 16
 
 // 64 bytes max, one configuration_partition_bytes
-// Currently there are 14 bytes unused
+// Currently there are 6 bytes unused
 typedef struct datalogger_settings { 
     char deploymentIdentifier[16]; // 16 bytes
-    char siteName[8]; // 8 bytes
     char loggerName[8]; // 8 bytes
+    char siteName[8]; // 8 bytes
+    unsigned long RTCsetTime; // 8 bytes
     unsigned long deploymentTimestamp; // 8 bytes
-    unsigned short interval;  // 2 bytes minutes
-    unsigned short burstNumber; // 2 bytes
+    char unused[6]; // 6 bytes unused
+    unsigned short wakeInterval;  // 2 bytes minutes
     unsigned short startUpDelay; // 2 bytes minutes
+    unsigned short burstNumber; // 2 bytes
     unsigned short interBurstDelay; // 2 bytes minutes
     char mode;       // 1 byte i(interactive), d(debug), l(logging), t(deploy on trigger)
     byte externalADCEnabled : 1;
     byte debug_values : 1;
     byte withold_incomplete_readings : 1; // only publish complete readings, default to withold.
     byte log_raw_data : 1;
-    byte reserved2 : 4;
+    byte debug_to_file: 1;
+    byte reserved2 : 3;
 } datalogger_settings_type;
- 
+
 typedef enum mode { interactive, debugging, logging, deploy_on_trigger } mode_type;
 
 // Forward declaration of class
@@ -71,7 +74,7 @@ class Datalogger
 {
 
 public:
-
+    
     // sensors
     unsigned short sensorCount = 0;
     bool * dirtyConfigurations = NULL;      // configuration change tracking
@@ -100,14 +103,16 @@ public:
     void setLoggerName(char * loggerName);
     void setDeploymentTimestamp(int timestamp);
 
-    void setInterval(int interval);
+    void setWakeInterval(int interval);
     void setBurstSize(int size);
     void setBurstNumber(int number);
     void setStartUpDelay(int delay);
-    void setIntraBurstDelay(int delay);
+    void setInterBurstDelay(int delay);
+
+    // void setRTCtimestamp(uint32 setTime);
 
     void setConfiguration(cJSON * config);
-    void getConfiguration(datalogger_settings_type * dataloggerSettings);
+    cJSON * getConfigurationJSON();
     cJSON * getSensorConfiguration(short index);
 
     void setSensorConfiguration(char * type, cJSON * json);
@@ -143,8 +148,10 @@ private:
     time_t currentEpoch;
     uint32 offsetMillis;
     char loggingFolder[26];
-    int completedBursts;
+    unsigned short completedBursts;
+    unsigned short measurementCycle; 
     int awakeTime;
+    uint32 burstCycleStartMillis;
 
     // user
     char userNote[100] = "\0";
@@ -177,8 +184,8 @@ private:
     void storeDataloggerConfiguration();
     void storeSensorConfiguration(SensorDriver * driver);
 
+    uint32 minMillisecondsUntilNextReading();
     void sleepMCU(uint32 milliseconds);
-    int minMillisecondsUntilNextReading();
  
     // run loop
     void initializeFilesystem();
@@ -194,7 +201,6 @@ private:
     // debugging
     void debugValues(char * buffer);
     void setSensorDebugModes(bool debug);
-
-
+    void notifyInvalid();
 };
 #endif

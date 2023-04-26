@@ -25,8 +25,9 @@ class Monitor
 {
 
 public:
-    bool debugToFile = false;
-    bool debugToSerial = false;
+    //TODO: CLI command to toggle these
+    bool debugToFile = true;
+    bool debugToSerial = true;
     WaterBear_FileSystem * filesystem = NULL;
 
 public:

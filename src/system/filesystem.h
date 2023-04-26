@@ -23,6 +23,9 @@
 #include "DS3231.h"
 #include "write_cache.h"
 
+// #define MAX_FILE_SIZE_BYTES  100000 // basing off of when it resets while running (121.3kb)
+// #define MAX_FILE_SIZE_BYTES  8000//
+
 class WaterBear_FileSystem : public OutputDevice
 {
 
@@ -48,6 +51,7 @@ public:
   void dumpLoggedDataToStream(Stream * myStream, char * lastFileNameSent);
   void closeFileSystem(); // close filesystem when sleeping
   void reopenFileSystem(); // reopen filesystem after wakeup
+  //bool checkFileSize(); //return whether max file size has been exceeded or not
   void writeString(const char * string);
   void endOfLine();
 

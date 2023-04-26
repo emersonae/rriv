@@ -48,6 +48,6 @@ void dateTime(uint16_t* date, uint16_t* time);
 void clearAllAlarms();
 time_t timestamp();
 void setTime(time_t toSet);
-void t_t2ts(time_t epochTS, uint32 currentMillis, char *humanTime);
+void t_t2ts(time_t unixTS, uint32 diffMillis, char *humanTime);
 
 #endif

@@ -296,15 +296,15 @@ void WaterBear_FileSystem::printCurrentDirListing()
 
 void WaterBear_FileSystem::closeFileSystem()
 {
-  Serial2.print(F("Close filesystem"));
+  // Serial2.println(F("Close filesystem"));
   //this->logfile.sync();
   this->logfile.close(); // syncs then closes
+
   //this->sd.end // doesn't exist
 }
 
 void WaterBear_FileSystem::reopenFileSystem()
 {
-
   initializeSDCard();
   bool success = this->openFile(filename);
   if( !success )
@@ -318,7 +318,11 @@ void WaterBear_FileSystem::reopenFileSystem()
   }
   else 
   {
-    debug(F("Reopen file succeeded"));
+    debug(F("Reopened file"));
   }
-
 }
+
+// bool WaterBear_FileSystem::checkFileSize()
+// {
+//   return (this->logfile.fileSize() > MAX_FILE_SIZE_BYTES);
+// }

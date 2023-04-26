@@ -21,8 +21,8 @@
 
 void i2cSendTransmission(byte i2cAddress, byte registerAddress, const void * data, int numBytes);
 void i2cError(int transmissionCode);
-void scanIC2(TwoWire *wire);
-bool scanIC2(TwoWire *wire, int searchAddress);
+void scanI2C(TwoWire *wire);
+bool scanI2C(TwoWire *wire, int searchAddress);
 void enableI2C1();
 void enableI2C2();
 

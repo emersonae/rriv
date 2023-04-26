@@ -34,7 +34,8 @@ byte readEEPROM(TwoWire * wire, int deviceaddress, short eeaddress )
   i2cSendTransmission(deviceaddress, eeaddress, 0, 0);
   delay(5);
 
-  short numBytes = wire->requestFrom(deviceaddress,1);
+  wire->requestFrom(deviceaddress,1);
+  // short numBytes = wire->requestFrom(deviceaddress,1);
   // char debugMessage[100];
   // sprintf(debugMessage, "ee got %i bytes", numBytes);
   // debug(debugMessage);
@@ -135,12 +136,12 @@ void readUniqueId(unsigned char * uuid)
 
   if(memcmp(uuid, uninitializedEEPROM, UUID_LENGTH) == 0)
   {
-    debug(F("Retrieve UUID"));
+    // debug(F("Retrieve UUID"));
     getSTM32UUID(uuid);
 
-    debug(F("UUID to Write:"));
-    decodeUniqueId(uuid, uuidString, UUID_LENGTH);
-    debug(uuidString);
+    // debug(F("UUID to Write:"));
+    // decodeUniqueId(uuid, uuidString, UUID_LENGTH);
+    // debug(uuidString);
     
     for(int i=0; i < UUID_LENGTH; i++)
     {
@@ -154,19 +155,19 @@ void readUniqueId(unsigned char * uuid)
       uuid[i] = readEEPROM(&Wire, EEPROM_I2C_ADDRESS, address);
     }
 
-    debug(F("UUID in EEPROM:"));
+    // debug(F("UUID in EEPROM:"));
     for(short i=0; i < UUID_LENGTH; i++)
     {
         sprintf(&uuidString[2*i], "%02X", (byte) uuid[i]);
     }
-    debug(uuidString);
+    // debug(uuidString);
   } 
   else 
   {
     // TODO: this is confused.  each byte is 00-FF, which means 12 bytes = 24 chars in hex
-    char uuidString[2 * UUID_LENGTH + 1];
-    decodeUniqueId(uuid, uuidString, UUID_LENGTH);
-    debug(uuidString);
+    // char uuidString[2 * UUID_LENGTH + 1];
+    // decodeUniqueId(uuid, uuidString, UUID_LENGTH);
+    // debug(uuidString);
   }
 
 }

@@ -1,6 +1,8 @@
 #include "sensors/drivers/atlas_co2_driver.h"
 #include "system/logs.h" // for debug() and notify()
 
+#define CO2_TAG "co2"
+
 AtlasCO2Driver::AtlasCO2Driver()
 {
   // debug("allocating driver template");
@@ -33,6 +35,7 @@ void AtlasCO2Driver::appendDriverSpecificConfigurationJSON(cJSON * json)
   addCalibrationParametersToJSON(json);
 }
 
+// TODO: should setup be distinguished from wakeup?
 void AtlasCO2Driver::setup()
 {
   // debug("setup AtlasCO2Driver");
@@ -41,13 +44,22 @@ void AtlasCO2Driver::setup()
     notify("CO2 setup failed");
   }
   modularSensorDriver->wake();
+  setupTime = millis();
 }
 
 void AtlasCO2Driver::stop()
 {
   modularSensorDriver->sleep();
+  delete modularSensorDriver;
   // debug("stop/delete AtlasCO2Driver");
 }
+
+// void AtlasCO2Driver::factoryReset()
+// {
+//   notify("FactoryReset");
+//   wire->beginTransmission(0x69); // default address
+//   wire->write((const uint8_t*)"Factory",8);
+// }
 
 bool AtlasCO2Driver::takeMeasurement()
 {
@@ -61,21 +73,25 @@ bool AtlasCO2Driver::takeMeasurement()
     value = modularSensorDriver->sensorValues[0];
     modularSensorDriver->clearValues();
     measurementTaken = true;
+    addValueToBurstSummaryMean(CO2_TAG, value);
   }
   else
   {
     value = -1;
   }
 
-
   return measurementTaken;
 }
 
-const char *AtlasCO2Driver::getDataString()
+const char *AtlasCO2Driver::getRawDataString()
 {
-  // debug("configuring driver template dataString");
-  // process data string for .csv
-  sprintf(dataString, "%d,%d",value,0);
+  sprintf(dataString, "%d", value);
+  return dataString;
+}
+
+const char * AtlasCO2Driver::getSummaryDataString()
+{
+  sprintf(dataString, "%0.2f", getBurstSummaryMean(CO2_TAG));
   return dataString;
 }
 
@@ -115,4 +131,26 @@ void AtlasCO2Driver::setDriverDefaults()
   // debug("setting driver template driver defaults");
   // set default values for driver struct specific values
   configuration.cal_timestamp = 0;
+}
+
+uint32 AtlasCO2Driver::millisecondsUntilNextReadingAvailable()
+{
+  return 1000; // 1 reading per second
+}
+
+bool AtlasCO2Driver::isWarmedUp()
+{
+  timeDiff = millis() - setupTime;
+  if (timeDiff < 10000) // need 10 seconds to warm up
+  {
+    return false;
+  }
+  return true;
+}
+
+int AtlasCO2Driver::millisecondsToWarmUp()
+{
+  int warmupTime = 10000 - timeDiff;
+  setupTime -= warmupTime; // account for systick being off when sleeping
+  return warmupTime;
 }
