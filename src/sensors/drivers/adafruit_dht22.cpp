@@ -20,13 +20,13 @@
 #include "system/hardware.h" // for pin names
 
 short GPIO_PINS[7] = {
-    GPIO_PIN_1,
-    GPIO_PIN_2,
-    GPIO_PIN_3,
-    GPIO_PIN_4,
-    GPIO_PIN_5,
-    GPIO_PIN_6,
-    GPIO_PIN_7
+    GPIO_PIN_1, // CN7-30
+    GPIO_PIN_2, // CN10-22
+    GPIO_PIN_3, // CN10-24 // 5v booster
+    GPIO_PIN_4, // CN10-16
+    GPIO_PIN_5, // CN7-2
+    GPIO_PIN_6, // CN7-3
+    GPIO_PIN_7 // CN7-23
 };
 
 #define TEMPERATURE_VALUE_TAG "temperature"
@@ -44,7 +44,6 @@ const char * AdaDHT22::getSensorTypeString()
   return sensorTypeString;
 }
 
-
 configuration_bytes_partition AdaDHT22::getDriverSpecificConfigurationBytes()
 {
   configuration_bytes_partition partition;
@@ -56,7 +55,6 @@ void AdaDHT22::configureSpecificConfigurationsFromBytes(configuration_bytes_part
 {
   memcpy(&configuration, &configurationPartition, sizeof(driver_configuration));
 }
-
 
 void AdaDHT22::appendDriverSpecificConfigurationJSON(cJSON * json)
 {
@@ -78,7 +76,7 @@ void AdaDHT22::setup()
 
 void AdaDHT22::stop()
 {
-  free(dht);
+  delete dht;
   pinMode(GPIO_PINS[configuration.sensor_pin], INPUT);
   digitalWrite(GPIO_PINS[configuration.sensor_pin], LOW);
   // notify("AdaDHT22 stopped");
@@ -95,7 +93,7 @@ bool AdaDHT22::takeMeasurement()
   temperature = event.temperature;
   if(isnan(temperature))
   {
-    notify("Error reading temperature)");
+    notify("Read Error: temperature");
   }
   else
   {
@@ -106,7 +104,7 @@ bool AdaDHT22::takeMeasurement()
   humidity = event.relative_humidity;
   if(isnan(humidity))
   {
-    notify("Error reading humidity");
+    notify("Read Error: humidity");
   }
   else
   {
@@ -184,4 +182,9 @@ void AdaDHT22::setDriverDefaults()
   // debug("setting AdaDHT22 driver defaults");
   // set default values for driver struct specific values
   configuration.cal_timestamp = 0;
+}
+
+uint32 AdaDHT22::millisecondsUntilNextReadingAvailable()
+{
+  return 2000; // 1 reading per 2 seconds
 }

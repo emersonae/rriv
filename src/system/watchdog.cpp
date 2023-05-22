@@ -66,7 +66,7 @@ void startCustomWatchDog()
 
 void startCustomWatchDog(int watchdogSeconds)
 {
-  debug("Setup watchdog");
+  // debug("Setup watchdog");
 
   timer_init(TIMER1);
   timer_set_prescaler(TIMER1, 65535); //  64000000 / 65536 = 976.5 Hz

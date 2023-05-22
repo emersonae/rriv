@@ -87,7 +87,7 @@ public:
   void initCalibration();
   void calibrationStep(char *step, int arg_cnt, char **args);
 
-  unsigned int millisecondsUntilNextRequestedReading();
+  uint32 millisecondsUntilNextRequestedReading();
 
 protected:
   void configureSpecificConfigurationsFromBytes(configuration_bytes_partition configurations);
