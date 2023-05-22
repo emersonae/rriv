@@ -97,12 +97,6 @@ public:
   void clearConfigurationNeedsSave();
   bool getNeedsSave();
 
-<<<<<<< HEAD
- 
-
-
-=======
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
 protected:
   common_sensor_driver_config commonConfigurations;
   void configureCSVColumns();
@@ -196,15 +190,9 @@ public:
   // Timing
   virtual uint32 millisecondsUntilNextReadingAvailable();
 
-<<<<<<< HEAD
-  virtual unsigned int millisecondsUntilNextRequestedReading();
-  
-
-=======
   virtual uint32 millisecondsUntilNextRequestedReading();
 
   virtual void factoryReset();
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
 
 protected:
 

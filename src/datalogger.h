@@ -51,13 +51,8 @@ typedef struct datalogger_settings {
     char siteName[8]; // 8 bytes
     unsigned long RTCsetTime; // 8 bytes
     unsigned long deploymentTimestamp; // 8 bytes
-<<<<<<< HEAD
-    unsigned short interval;  // 2 bytes minutes
-    unsigned short burstNumber; // 2 bytes 
-=======
     char unused[6]; // 6 bytes unused
     unsigned short wakeInterval;  // 2 bytes minutes
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
     unsigned short startUpDelay; // 2 bytes minutes
     unsigned short burstNumber; // 2 bytes
     unsigned short interBurstDelay; // 2 bytes minutes
@@ -191,10 +186,6 @@ private:
 
     uint32 minMillisecondsUntilNextReading();
     void sleepMCU(uint32 milliseconds);
-<<<<<<< HEAD
-    unsigned int minMillisecondsUntilNextReading();
-=======
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
  
     // run loop
     void initializeFilesystem();

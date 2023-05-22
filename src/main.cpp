@@ -57,21 +57,7 @@ void setup(void)
   enableI2C1();
   delay(500);
 
-<<<<<<< HEAD
-
-  
-
-  
-
-
-
-
-
-
-  debug("creating datalogger");
-=======
   // debug("creating datalogger");
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
   datalogger_settings_type *dataloggerSettings = (datalogger_settings_type *)malloc(sizeof(datalogger_settings_type));
   Datalogger::readConfiguration(dataloggerSettings);
   datalogger = new Datalogger(dataloggerSettings);
@@ -92,14 +78,8 @@ void setup(void)
   // Otherwise we need to check that the unit has been power cycled for debug mode after flashing
   if (datalogger->inMode(logging))
   {
-<<<<<<< HEAD
-    notify("Device will enter logging mode in 5 seconds");
-    notify("Type 'i' to exit to interactive mode");
-    
-=======
     notify("Device -> log mode in 5 sec");
     notify("Enter 'i' for interactive mode");
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
     Serial2.print("CMD >> ");
     int start = timestamp();
     int now = start;

@@ -48,10 +48,6 @@
 
 #define ONBOARD_LED_PIN PA5
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
 #define GPIO_PIN_1 PA1
 #define GPIO_PIN_2 PB2
 #define GPIO_PIN_3 PB8 // 5v booster

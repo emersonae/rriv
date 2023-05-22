@@ -133,17 +133,7 @@ class CommandInterface
     void _help();
     void _mcuDebugStatus();
 
-<<<<<<< HEAD
-    void _gpiotest(); // toggles gpio pin state (low/high)
-
-    void _airpumptest();
-
-
-
-
-=======
     void _gpiotest(int pin); // toggles gpio pin state (low/high)
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
 
   private:
     Datalogger * datalogger;
