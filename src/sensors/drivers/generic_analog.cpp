@@ -152,9 +152,12 @@ void GenericAnalogDriver::setup()
 
 void GenericAnalogDriver::stop()
 {
-  pinMode(ADC_PINS[configurations.sensor_port], INPUT);
-  digitalWrite(ADC_PINS[configurations.sensor_port], LOW);
-  // notify("ADC port stopped");
+  if (configurations.adc_select == ADC_SELECT_INTERNAL)
+  {
+    pinMode(ADC_PINS[configurations.sensor_port], INPUT);
+    digitalWrite(ADC_PINS[configurations.sensor_port], LOW);
+    // notify("ADC port stopped");
+  }
 }
 
 bool GenericAnalogDriver::takeMeasurement()
@@ -171,7 +174,7 @@ bool GenericAnalogDriver::takeMeasurement()
 
   case ADC_SELECT_EXTERNAL:
   {
-    debug("get extADC value");
+    // debug("get extADC value");
     this->value = externalADC->getChannelValue(configurations.sensor_port);
   }
   break;
@@ -417,7 +420,7 @@ void GenericAnalogDriver::addCalibrationParametersToJSON(cJSON *json)
   }
 }
 
-unsigned int GenericAnalogDriver::millisecondsUntilNextRequestedReading()
+uint32 GenericAnalogDriver::millisecondsUntilNextRequestedReading()
 {
-  return 100;
+  return 100; // analog can be read continuously, but would not be meaningful
 }

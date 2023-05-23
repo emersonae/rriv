@@ -34,7 +34,7 @@
 #define EEPROM_DATALOGGER_CONFIGURATION_SIZE 64
 #define EEPROM_DATALOGGER_SENSORS_START 80
 #define EEPROM_DATALOGGER_SENSOR_SIZE 64
-#define EEPROM_TOTAL_SENSOR_SLOTS 4 // can be 12
+#define EEPROM_TOTAL_SENSOR_SLOTS 4 // can be 12 with 24LC08B EEPROM installed
 
 void writeEEPROM(TwoWire * wire, int deviceaddress, short eeaddress, byte data );
 byte readEEPROM(TwoWire * wire, int deviceaddress, short eeaddress );

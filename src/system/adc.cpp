@@ -32,8 +32,8 @@ AD7091R::AD7091R()
 
 void AD7091R::configure()
 {
-  configuration_register configurationGet = this->readConfigurationRegister();
-  this->printConfigurationRegister(configurationGet);
+  // configuration_register configurationGet = this->readConfigurationRegister();
+  // this->printConfigurationRegister(configurationGet);
 
   configuration_register configuration; //= this->readConfigurationRegister();
   // this->printConfigurationRegister(configuration);
@@ -43,8 +43,8 @@ void AD7091R::configure()
   // this->printConfigurationRegister(configuration);
   this->writeConfigurationRegister(configuration);
 
-  configuration_register configurationSet = this->readConfigurationRegister();
-  this->printConfigurationRegister(configurationSet);
+  // configuration_register configurationSet = this->readConfigurationRegister();
+  // this->printConfigurationRegister(configurationSet);
 
   
   struct channel_register channelRegister;
@@ -82,8 +82,8 @@ void AD7091R::enableChannel(short channel)
   // this->printConfigurationRegister(configuration);
   this->writeConfigurationRegister(configuration);
   
-  configuration_register configurationSet = this->readConfigurationRegister();
-  this->printConfigurationRegister(configurationSet);
+  // configuration_register configurationSet = this->readConfigurationRegister();
+  // this->printConfigurationRegister(configurationSet);
 }
 
 void AD7091R::disableChannel(short channel)
@@ -109,7 +109,7 @@ void AD7091R::disableChannel(short channel)
 
 void AD7091R::updateChannelRegister()
 {
-  debug("update channel register");
+  // debug("update channel register");
   struct channel_register channelRegister = this->readChannelRegister();
   channelRegister.CH0 = channel0Enabled;
   channelRegister.CH1 = channel1Enabled;
@@ -161,9 +161,9 @@ configuration_register AD7091R::readConfigurationRegister()
 void AD7091R::writeConfigurationRegister(configuration_register configurationRegister)
 {
   // debug(F("writing configuration register"));
-  printConfigurationRegister(configurationRegister);
-  Serial2.println(  *((byte *) &configurationRegister+1), BIN);
-  Serial2.println(  *((byte *) &configurationRegister), BIN);
+  // printConfigurationRegister(configurationRegister);
+  // Serial2.println(  *((byte *) &configurationRegister+1), BIN);
+  // Serial2.println(  *((byte *) &configurationRegister), BIN);
   this->sendTransmission(ADC_CONFIGURATION_REGISTER_ADDRESS, &configurationRegister, 2);
 }
 

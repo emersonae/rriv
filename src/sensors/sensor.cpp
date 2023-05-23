@@ -145,6 +145,9 @@ void SensorDriver::setDefaults()
   this->setDriverDefaults();
 }
 
+void invalid(){
+  notify("Invalid");
+}
 
 bool SensorDriver::configureFromJSON(cJSON * json)
 {
@@ -171,7 +174,8 @@ bool SensorDriver::configureFromJSON(cJSON * json)
   }
   else
   {
-    notify("Invalid slot");
+    invalid();
+    notify("slot");
     return false;
   }
 
@@ -182,7 +186,8 @@ bool SensorDriver::configureFromJSON(cJSON * json)
   }
   else
   {
-    notify("Invalid tag");
+    invalid();
+    notify("tag");
     return false;
   }
 
@@ -193,7 +198,8 @@ bool SensorDriver::configureFromJSON(cJSON * json)
   }
   else
   {
-    notify("Invalid burst size");
+    invalid();
+    notify("burst_size");
     return false;
   }
 
@@ -267,12 +273,17 @@ bool SensorDriver::getNeedsSave()
   return this->configurationNeedsSave;
 }
 
-unsigned int SensorDriver::millisecondsUntilNextReadingAvailable()
+int SensorDriver::millisecondsToWarmUp()
+{
+  return 0; // default is ready to read... we shouldn't ask this unless a sensor is not warmed up though, so the default should throw an error?
+}
+
+uint32 SensorDriver::millisecondsUntilNextReadingAvailable()
 {
   return 0; // return min by default, a larger number in driver implementation causes correct delay
 }
 
-unsigned int SensorDriver::millisecondsUntilNextRequestedReading()
+uint32 SensorDriver::millisecondsUntilNextRequestedReading()
 {
   return MAX_REQUESTED_READING_DELAY; // as slow as possible by default, a smaller number in driver implementation forces faster read
 }
@@ -316,6 +327,7 @@ protocol_type DriverTemplateProtocolSensorDriver::getProtocol()
   return drivertemplate;
 }
 
+<<<<<<< HEAD
 GenericActuatorProtocolSensorDriver::~GenericActuatorProtocolSensorDriver(){}
 
 protocol_type GenericActuatorProtocolSensorDriver::getProtocol()
@@ -323,3 +335,8 @@ protocol_type GenericActuatorProtocolSensorDriver::getProtocol()
   // debug("getting generic actuator template");
   return genericactuator;
 }
+=======
+
+// function for atlas co2 sensor - KC
+void SensorDriver::factoryReset(){}
+>>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92

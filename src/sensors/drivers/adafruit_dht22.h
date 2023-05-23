@@ -53,6 +53,8 @@ class AdaDHT22 : public GPIOProtocolSensorDriver
     const char * getBaseColumnHeaders();
     void initCalibration();
     void calibrationStep(char *step, int arg_cnt, char ** args);
+    
+    uint32 millisecondsUntilNextReadingAvailable();
 
   protected:
     void configureSpecificConfigurationsFromBytes(configuration_bytes_partition configurations);
@@ -62,7 +64,7 @@ class AdaDHT22 : public GPIOProtocolSensorDriver
     void setDriverDefaults();
 
   private:
-    const char *sensorTypeString = "adafruit_dht22";
+    const char *sensorTypeString = ADAFRUIT_DHT22_TYPE_STRING;
     driver_configuration configuration;
     DHT_Unified *dht;
 

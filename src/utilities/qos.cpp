@@ -26,8 +26,8 @@ extern "C" char* _sbrk(int incr);
 int freeMemory()
 {
   char top;
-  debug((int) &top );
-  debug((int) reinterpret_cast<char*>(_sbrk(0)) );
+  // debug((int) &top );
+  // debug((int) reinterpret_cast<char*>(_sbrk(0)) );
 
   return &top - reinterpret_cast<char*>(_sbrk(0));
 }
@@ -39,17 +39,17 @@ void intentionalMemoryLeak()
   debug(mem); // use it so compiler doesn't remove the leak
 }
 
-
 void checkMemory()
 {
   // calculate and print free memory
   // reset the system if we are running out of memory
-  char freeMemoryMessage[21];
+  // char freeMemoryMessage[21];
   int freeMemoryAmount = freeMemory();
-  sprintf(freeMemoryMessage, reinterpretCharPtr(F("Free Memory: %d")), freeMemoryAmount);
-  debug(freeMemoryMessage);
+  // sprintf(freeMemoryMessage, reinterpretCharPtr(F("FreeMem: %d")), freeMemoryAmount);
+  // debug(freeMemoryMessage);
   if(freeMemoryAmount < 500){
-    debug(F("Low mem, resetting!"));
+    //debug(F("Low mem, resetting!"));
+    debug(F("LOWMEM"));
     nvic_sys_reset(); // software reset, takes us back to init
   }
 }

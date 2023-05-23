@@ -40,7 +40,7 @@ void DriverTemplate::setup()
 
 void DriverTemplate::stop() 
 {
-  // debug("stop/delete DriverTemplate");
+  // debug("stop/sleep and delete new DriverTemplate");
 }
 
 bool DriverTemplate::takeMeasurement()
