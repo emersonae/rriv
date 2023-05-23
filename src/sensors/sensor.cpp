@@ -327,7 +327,6 @@ protocol_type DriverTemplateProtocolSensorDriver::getProtocol()
   return drivertemplate;
 }
 
-<<<<<<< HEAD
 GenericActuatorProtocolSensorDriver::~GenericActuatorProtocolSensorDriver(){}
 
 protocol_type GenericActuatorProtocolSensorDriver::getProtocol()
@@ -335,8 +334,6 @@ protocol_type GenericActuatorProtocolSensorDriver::getProtocol()
   // debug("getting generic actuator template");
   return genericactuator;
 }
-=======
 
 // function for atlas co2 sensor - KC
 void SensorDriver::factoryReset(){}
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92

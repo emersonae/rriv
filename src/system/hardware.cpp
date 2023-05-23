@@ -60,7 +60,6 @@ void setupHardwarePins()
   
   pinMode(INTERRUPT_LINE_7_PIN, INPUT_PULLUP); // This the interrupt line 7
   
-<<<<<<< HEAD
   // Moved to generic_analog driver for INPUT_ANALOG mode
   // Need to test and see if these pins can also be used as GPIO for actuator drivers
 
@@ -124,14 +123,12 @@ void setupHardwarePins()
   pinMode(PB2, OUTPUT);  //yes
 
 
-=======
   pinMode(ONBOARD_LED_PIN, OUTPUT); // This is the onboard LED ? Turns out this is also the SPI1 clock.  niiiiice.
 
   pinMode(BATTERY_INPUT, INPUT_ANALOG); // to monitor the battery pack
 
   pinMode(GPIO_PIN_6, OUTPUT); // GPIO pin available
   pinMode(24, OUTPUT); // in use for 5v booster
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
 
   // pinMode(PA4, INPUT_PULLDOWN); // mosfet for battery measurement - should be OUTPUT ??
 

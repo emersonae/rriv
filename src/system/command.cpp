@@ -697,32 +697,10 @@ void help(int arg_cnt, char**args)
   CommandInterface::instance()->_help();
 }
 
-void airpumptest (int arg_cnt, char**args)
-{
-  CommandInterface::instance()->_airpumptest();
-}
-
-void CommandInterface::_airpumptest()
-{
-  
-  // AirPump ap;
-  // ap.actuateBeforeWarmUp();
-  // for(int i = 0; i < 5; i++)  //only doing 2 cycles before stoping WHY 
-  // {
-  //   digitalWrite(GPIO_PIN_6, HIGH);
-  //   //delay(dutyCycle*total*1000); //totalTimeCycle not not "declared in scope" other variables are fine tho
-  //   delay(0.5*10*1000);
-  //   digitalWrite(GPIO_PIN_6, LOW);
-  //   // delay((1-dutyCycle)*timeFullCycle*1000);
-  //   delay((1-0.5)*10*1000);
-  // }
-
-  
 }
 
 void CommandInterface::_help()
 {
-<<<<<<< HEAD
   char commands[] = "Command List:\n"
   "version\n"
   "show-warranty\n"
@@ -757,16 +735,13 @@ void CommandInterface::_help()
   "switched-power-off\n"
   "enter-stop\n"
 
-  "airpump-test\n"
 
   "mcu-debug-status\n";
   
 
   notify(commands);
-=======
   // notify("RRIV command list:"); // 48 bytes of flash
   cmdList();
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
 }
 
 void gpiotest(int arg_cnt, char**args)
@@ -780,21 +755,6 @@ void gpiotest(int arg_cnt, char**args)
 
 void CommandInterface::_gpiotest(int pin)
 {
-<<<<<<< HEAD
-  
-  if (digitalRead(GPIO_PIN_6) == HIGH ) {
-    digitalWrite(GPIO_PIN_6, LOW);
-
-  }
-  else {
-    digitalWrite(GPIO_PIN_6, HIGH);
-    
-  }
-  
-}
-
-
-=======
   // requires the exact pin value from the board.h enum
   if (digitalRead(pin) == HIGH)
     digitalWrite(pin, LOW);
@@ -819,7 +779,6 @@ void CommandInterface::_gpiotest(int pin)
 //   this->datalogger->sleepMCU(minutes*60000);
 // }
 
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
 void reloadSensorConfigurations(int arg_cnt, char**args)
 {
   CommandInterface::instance()->_reloadSensorConfigurations();
@@ -830,13 +789,10 @@ void CommandInterface::_reloadSensorConfigurations()
   this->datalogger->reloadSensorConfigurations();
 }
 
-<<<<<<< HEAD
 
 
-=======
 // Note: commands commented out here will lower flash used
 // and not require commenting out code elsewhere
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
 void CommandInterface::setup(){
   // cmdAdd("version", printVersion);
   // cmdAdd("show-warranty", printWarranty);
@@ -884,25 +840,11 @@ void CommandInterface::setup(){
   // cmdAdd("mcu-debug-status", mcuDebugStatus);
 
   cmdAdd("help", help);
-<<<<<<< HEAD
-  cmdAdd("airpump-test", airpumptest);
-  cmdAdd("gpio-test", gpiotest);
-  cmdAdd("airpump-test", airpumptest);
-
-  
-  // cmdAdd("step-test", steptest);
-
-}
-
-
-
-=======
 
   // cmdAdd("gpio-test", gpiotest);
   // cmdAdd("factory-reset",factoryReset); // TODO: get rid of this in sensor
 }
 
->>>>>>> 6592eb8104ebdd496d50977e28bc35a3891c9c92
 void CommandInterface::poll()
 {
   cmdPoll();

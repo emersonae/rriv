@@ -188,9 +188,9 @@ public:
   virtual void calibrationStep(char *step, int arg_cnt, char **args) = 0;
 
   // Timing
-  virtual uint32 millisecondsUntilNextReadingAvailable();
+  virtual int millisecondsUntilNextReadingAvailable();
 
-  virtual uint32 millisecondsUntilNextRequestedReading();
+  virtual int millisecondsUntilNextRequestedReading();
 
   virtual void factoryReset();
 
