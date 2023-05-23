@@ -52,7 +52,7 @@ void BME280Driver::appendDriverSpecificConfigurationJSON(cJSON * json)
 
 void BME280Driver::setup()
 {
-  BME280ptr = new Adafruit_BME280();
+  BME280ptr = new BME280();
 
 }
 
@@ -67,7 +67,7 @@ bool BME280Driver::takeMeasurement()
   //return true if measurement taken store in class value(s), false if not
   
   bool measurementTaken = false; //temporarily setting to always true 
-  temperature = BME280ptr->readTemperature();
+  temperature = BME280ptr->getTemperature();
   // if(isnan(temperature))
   // {
   //   notify("Error reading temperature)");
@@ -76,7 +76,7 @@ bool BME280Driver::takeMeasurement()
   // {
   //   measurementTaken = true;
   // }
-  pressure = BME280ptr->readPressure();
+  pressure = BME280ptr->getPressure();
   // if(isnan(pressure))
   // {
   //   notify("Error reading pressure");
