@@ -22,6 +22,7 @@
 #include "configuration.h"
 #include "system/logs.h"
 
+// TODO: are these functions pointless? Or will people understand what it means to write low/high to pins?
 void gpioPinOff(uint8 pin)
 {
     digitalWrite(pin, LOW);
@@ -59,20 +60,12 @@ void setupHardwarePins()
   
   pinMode(INTERRUPT_LINE_7_PIN, INPUT_PULLUP); // This the interrupt line 7
   
-  // Moved to generic_analog driver for INPUT_ANALOG mode
-  // Need to test and see if these pins can also be used as GPIO for actuator drivers
-  /*
-  pinMode(ANALOG_INPUT_1_PIN, INPUT_ANALOG);
-  pinMode(ANALOG_INPUT_2_PIN, INPUT_ANALOG);
-  pinMode(ANALOG_INPUT_3_PIN, INPUT_ANALOG);
-  pinMode(ANALOG_INPUT_4_PIN, INPUT_ANALOG);
-  pinMode(ANALOG_INPUT_5_PIN, INPUT_ANALOG);
-  */
   pinMode(ONBOARD_LED_PIN, OUTPUT); // This is the onboard LED ? Turns out this is also the SPI1 clock.  niiiiice.
 
+  pinMode(BATTERY_INPUT, INPUT_ANALOG); // to monitor the battery pack
+
   pinMode(GPIO_PIN_6, OUTPUT); // GPIO pin available
-  pinMode(GPIO_PIN_3, OUTPUT); // in use for 5v booster
-  // pinMode(GPIO_PIN_5, OUTPUT); // in use for DHT22 [INPUT_PULLUP]
+  pinMode(24, OUTPUT); // in use for 5v booster
 
   // pinMode(PA4, INPUT_PULLDOWN); // mosfet for battery measurement - should be OUTPUT ??
 
@@ -86,5 +79,5 @@ void setupHardwarePins()
 
 int getBatteryValue()
 {
-  return analogRead(PB0);
+  return analogRead(BATTERY_INPUT);
 }

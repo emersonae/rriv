@@ -56,15 +56,15 @@ void setup(void)
   enableI2C1();
   delay(500);
 
-  debug("creating datalogger");
+  // debug("creating datalogger");
   datalogger_settings_type *dataloggerSettings = (datalogger_settings_type *)malloc(sizeof(datalogger_settings_type));
   Datalogger::readConfiguration(dataloggerSettings);
   datalogger = new Datalogger(dataloggerSettings);
-  debug("created datalogger");
+  // debug("created datalogger");
   datalogger->setup();
 
   /* We're ready to go! */
-  debug(F("done with setup"));
+  debug(F("setup done"));
   notifyDebugStatus();
 
   startCustomWatchDog(); // printMCUDebugStatus delays with user message, don't want watchdog to trigger
@@ -73,10 +73,12 @@ void setup(void)
 
   printWelcomeMessage(dataloggerSettings);
 
+  // TODO: I think by default the logger should always be in interactive mode on flash, is that possible?
+  // Otherwise we need to check that the unit has been power cycled for debug mode after flashing
   if (datalogger->inMode(logging))
   {
-    notify("Device will enter logging mode in 5 seconds");
-    notify("Type 'i' to exit to interactive mode");
+    notify("Device -> log mode in 5 sec");
+    notify("Enter 'i' for interactive mode");
     Serial2.print("CMD >> ");
     int start = timestamp();
     int now = start;
@@ -92,13 +94,12 @@ void setup(void)
     Serial2.print("CMD >> ");
     Serial2.flush();
   }
-
 }
 
 void loop(void)
 {
   startCustomWatchDog();
-  printWatchDogStatus();
+  // printWatchDogStatus();
   checkMemory();
 
   datalogger->loop();

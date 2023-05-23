@@ -22,6 +22,8 @@
 #include "system/eeprom.h" // TODO: ideally not included in this scope
 #include "system/clock.h"  // TODO: ideally not included in this scope
 
+#define EC_TAG "ec"
+
 AtlasECDriver::AtlasECDriver()
 {
   // debug("allocation AtlasECDriver");
@@ -74,6 +76,12 @@ void AtlasECDriver::setup()
   oem_ec->setProbeType(1.0);
 }
 
+void AtlasECDriver::stop()
+{
+  delete oem_ec;
+  // debug("stop/delete AtlasCO2Driver");
+}
+
 void AtlasECDriver::hibernate()
 {
   oem_ec->setHibernate();
@@ -110,8 +118,8 @@ bool AtlasECDriver::takeMeasurement()
     if(newDataAvailable)
     {
       value = oem_ec->getConductivity(true);
-      addValueToBurstSummaryMean("ec", value);
-      lastSuccessfulReadingMillis = millis();
+      addValueToBurstSummaryMean(EC_TAG, value);
+      // lastSuccessfulReadingMillis = millis();
       return true;
     }
     else
@@ -121,9 +129,10 @@ bool AtlasECDriver::takeMeasurement()
     }
 }
 
-unsigned int AtlasECDriver::millisecondsUntilNextReadingAvailable()
+uint32 AtlasECDriver::millisecondsUntilNextReadingAvailable()
 {
-  return 640 - (millis() - lastSuccessfulReadingMillis);
+  // return 640 - (millis() - lastSuccessfulReadingMillis);
+  return 1000; // 1 reading per second
 }
 
 const char * AtlasECDriver::getRawDataString()
@@ -134,7 +143,7 @@ const char * AtlasECDriver::getRawDataString()
 
 const char * AtlasECDriver::getSummaryDataString()
 {
-  sprintf(dataString, "%0.2f", getBurstSummaryMean("ec"));
+  sprintf(dataString, "%0.2f", getBurstSummaryMean(EC_TAG));
   return dataString;
 }
 
